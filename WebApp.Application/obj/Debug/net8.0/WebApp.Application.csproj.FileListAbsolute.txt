@@ -1,0 +1,15 @@
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\obj\Debug\net8.0\WebApp.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\obj\Debug\net8.0\WebApp.Application.AssemblyInfoInputs.cache
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\obj\Debug\net8.0\WebApp.Application.AssemblyInfo.cs
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\obj\Debug\net8.0\WebApp.Application.csproj.CoreCompileInputs.cache
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\bin\Debug\net8.0\WebApp.Application.deps.json
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\bin\Debug\net8.0\WebApp.Application.dll
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\bin\Debug\net8.0\WebApp.Application.pdb
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\bin\Debug\net8.0\WebApp.Domain.dll
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\bin\Debug\net8.0\WebApp.Domain.pdb
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\obj\Debug\net8.0\WebApp.Application.csproj.AssemblyReference.cache
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\obj\Debug\net8.0\WebApp.A.5467E38F.Up2Date
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\obj\Debug\net8.0\WebApp.Application.dll
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\obj\Debug\net8.0\refint\WebApp.Application.dll
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\obj\Debug\net8.0\WebApp.Application.pdb
+C:\Users\mtszp\source\repos\WebApp\WebApp.Application\obj\Debug\net8.0\ref\WebApp.Application.dll

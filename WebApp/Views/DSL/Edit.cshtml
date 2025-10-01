@@ -1,0 +1,121 @@
+﻿@model WebApp.Application.DSL.Commands.EditDSL.EditDSLCommand
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edytuj:</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Id" />
+                <label asp-for="ShopId" class="control-label">Numer drogerii</label>
+                <input asp-for="ShopId" class="form-control" />
+                <span asp-validation-for="ShopId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ServiceName" class="control-label">Dostawca</label>
+                <input asp-for="ServiceName" class="form-control" />
+                <span asp-validation-for="ServiceName" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label class="control-label">Typ usługi</label>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" value="DHCP" asp-for="ServiceType">
+                    <label class="form-check-label" asp-for="ServiceType">DHCP</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" value="Static" asp-for="ServiceType">
+                    <label class="form-check-label" asp-for="ServiceType">Statyczny</label>
+                </div>
+
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" value="PPoE" asp-for="ServiceType">
+                    <label class="form-check-label" asp-for="ServiceType">PPoE</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="IP" class="control-label"></label>
+                <input asp-for="IP" class="form-control" />
+                <span asp-validation-for="IP" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="Static_group">
+                <label asp-for="Mask" class="control-label">Maska</label>
+                <input asp-for="Mask" class="form-control" />
+                <span asp-validation-for="Mask" class="text-danger"></span>
+                <label asp-for="Gateway" class="control-label">Brama</label>
+                <input asp-for="Gateway" class="form-control" />
+                <span asp-validation-for="Gateway" class="text-danger"></span>
+                <label asp-for="DNS1" class="control-label"></label>
+                <input asp-for="DNS1" class="form-control" />
+                <span asp-validation-for="DNS1" class="text-danger"></span>
+                <label asp-for="DNS2" class="control-label"></label>
+                <input asp-for="DNS2" class="form-control" />
+                <span asp-validation-for="DNS2" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="PPoE_group">
+                <label asp-for="Login" class="control-label"></label>
+                <input asp-for="Login" class="form-control" />
+                <span asp-validation-for="Login" class="text-danger"></span>
+                <label asp-for="Password" class="control-label">Hasło</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label">Opis</label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        function updateFieldVisibility() {
+            const selectedType = document.querySelector('input[name="ServiceType"]:checked')?.value;
+
+            const staticGroup = document.getElementById("Static_group");
+            const ppoeGroup = document.getElementById("PPoE_group");
+
+            if (selectedType === "DHCP") {
+                staticGroup.style.display = "none";
+                ppoeGroup.style.display = "none";
+            } else if (selectedType === "Static") {
+                staticGroup.style.display = "block";
+                ppoeGroup.style.display = "none";
+            } else if (selectedType === "PPoE") {
+                staticGroup.style.display = "none";
+                ppoeGroup.style.display = "block";
+            } else {
+                staticGroup.style.display = "block";
+                ppoeGroup.style.display = "block";
+            }
+        }
+
+        // Obsługa zmiany typu usługi
+        document.querySelectorAll('input[name="ServiceType"]').forEach(radio => {
+            radio.addEventListener("change", updateFieldVisibility);
+        });
+
+        // Inicjalizacja po załadowaniu strony
+        document.addEventListener("DOMContentLoaded", updateFieldVisibility);
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

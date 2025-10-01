@@ -1,0 +1,28 @@
+﻿@model WebApp.Application.Modem.SimCardDTO
+
+<h2>Dane karty SIM</h2>
+<dl class="row">
+    <dt class="col-sm-3">Numer telefonu</dt>
+    <dd class="col-sm-9">@Model.PhoneNumber</dd>
+
+    <dt class="col-sm-3">USIM</dt>
+    <dd class="col-sm-9">@Model.USIM</dd>
+
+    <dt class="col-sm-3">PIN</dt>
+    <dd class="col-sm-9">@Model.PIN</dd>
+
+    <dt class="col-sm-3">PUK</dt>
+    <dd class="col-sm-9">@Model.PUK</dd>
+
+    <dt class="col-sm-3">Operator</dt>
+    <dd class="col-sm-9">@Model.Op</dd>
+
+    <dt class="col-sm-3">Adres IP</dt>
+    <dd class="col-sm-9">@Model.IP</dd>
+</dl>
+
+<a asp-controller="Modem" asp-action="EditDevice" asp-route-simCardID="@Model.SIMId" class="btn btn-warning btn-sm">Edytuj</a>
+<form asp-controller="Modem" asp-action="DeleteSimCard" asp-route-SIMId=@Model.SIMId" method="post" onsubmit="return confirm('Czy na pewno chcesz usunąć ten modem?');">
+    <button type="submit" class="btn btn-danger">🗑️ Usuń</button>
+</form>
+<a asp-action="Index" class="btn btn-secondary">Powrót</a>

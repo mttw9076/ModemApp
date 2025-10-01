@@ -1,0 +1,55 @@
+﻿@Html.AntiForgeryToken()
+@using Microsoft.AspNetCore.Identity
+
+<div class="container mt-4">
+    @if (User.Identity.IsAuthenticated)
+    {
+        <h3>Witaj @User.Identity.Name!</h3>
+    }
+    else
+    {
+        <h3>Zaloguj się</h3>
+        @Html.AntiForgeryToken()
+        <form id="loginForm">
+            <div class="mb-3">
+                <label>Email</label>
+                <input type="email" name="Email" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label>Hasło</label>
+                <input type="password" name="Password" class="form-control" required />
+            </div>
+            <div id="loginError" class="text-danger mb-2" style="display:none;"></div>
+            <button type="submit" class="btn btn-primary">Zaloguj</button>
+        </form>
+    }
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $("#loginForm").submit(function (e) {
+      e.preventDefault();
+
+      var formData = {
+        Email: $("input[name='Email']").val(),
+        Password: $("input[name='Password']").val(),
+        __RequestVerificationToken: $('input[name="__RequestVerificationToken"]').val()
+      };
+
+      $.ajax({
+        type: "POST",
+        url: "/Account/AjaxLogin",
+        data: formData,
+        success: function (response) {
+          if (response.success) {
+            location.reload(); // lub dynamiczna aktualizacja UI
+          } else {
+            $("#loginError").text(response.message).show();
+          }
+        },
+        error: function () {
+          $("#loginError").text("Błąd serwera. Spróbuj ponownie.").show();
+        }
+      });
+    });
+</script>

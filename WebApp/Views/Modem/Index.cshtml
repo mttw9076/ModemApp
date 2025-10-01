@@ -1,0 +1,176 @@
+﻿<a asp-controller="Modem" asp-action="CreateModem" class="btn btn-success mb-2"> ➕ Dodaj modem</a>
+<a asp-controller="Modem" asp-action="CreateSIMCard" class="btn btn-success mb-2"> ➕ Dodaj kartę</a>
+<div style="height: 100vh">
+<div style=" max-height: 33%; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
+<h2>Modemy z przypisaną kartą SIM</h2>
+<table class="table table-bordered" id="modemTable">
+    <thead>
+        <tr >
+            <th >
+            RU<input type="text" placeholder="Szukaj RU" class="form-control form-control-sm" />
+            </th>
+            <th >
+            SN<input type="text" placeholder="Szukaj SN" class="form-control form-control-sm" />
+            </th>
+            <th >
+            IP<input type="text" placeholder="Szukaj IP" class="form-control form-control-sm" />
+            </th>
+            <th >
+            Numer drogerii<input type="text" placeholder="Szukaj drogerii" class="form-control form-control-sm" />
+            </th>
+            <th >Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var modem in Model.ModemsWithSim)
+        {
+            <tr>
+                <td>@modem.RU</td>
+                <td>@modem.SerialNumber</td>
+                <td>@modem.SIMCard.IP</td>
+                <td>@modem.ShopID</td>
+                    <td class="d-flex flex-wrap gap-2">
+                    <form asp-action="DisconnectSimFromModem" method="post">
+                        <input type="hidden" name="ru" value="@modem.RU" />
+                        <button type="submit" class="btn btn-success mb-2">Rozłącz kartę SIM</button>
+                        </form>
+                    <a asp-controller="Modem" asp-action="DetailsCombined" asp-route-RU="@modem.RU" asp-route-simCardID="@modem.SIMCard.SIMId" class="btn btn-info btn-sm mb-2">Szczegóły</a>
+                    <a asp-controller="Modem" asp-action="EditDevice" asp-route-RU="@modem.RU" class="btn btn-warning btn-sm mb-2" >Edytuj</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+<div style=" max-height: 33%; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
+<h2>Modemy bez przypisanej karty SIM</h2>
+<table class="table table-bordered" id="modemSIMtable">
+    <thead>
+        <tr>
+            <th >Model<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+            <th >RU<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+            <th >SN<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+            <th>Numer Drogerii<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+            <th >Połącz z kartą SIM</th>
+            <th >Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var modem in Model.ModemsWithoutSim)
+        {
+            <tr>
+                <td>@modem.Model</td>
+                <td>@modem.RU</td>
+                <td>@modem.SerialNumber</td>
+                <td>@modem.ShopID</td>
+                <td>
+                    <form asp-action="ConnectSimToModem" method="post">
+                        <input type="hidden" name="ru" value="@modem.RU" />
+                        <select name="phoneNumber" class="form-select form-select-sm select2 w-100">
+                            @foreach (var sim in Model.SimCardsWithoutModem)
+                            {
+                                <option value="@sim.PhoneNumber">@sim.PhoneNumber (@sim.Op)</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-success btn-sm">Połącz</button>
+                    </form>
+                </td>
+                <td>
+                    <a asp-controller="Modem" asp-action="DetailsModem" asp-route-RU="@modem.RU" class="btn btn-info btn-sm mb-2" >Szczegóły</a>
+                    <a asp-controller="Modem" asp-action="EditDevice" asp-route-RU="@modem.RU" class="btn btn-warning btn-sm mb-2" >Edytuj</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+<div style=" max-height: 33%; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
+<h2>Karty SIM bez modemu</h2>
+<table id="simTable" class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th>Numer telefonu<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+            <th>PIN<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+            <th>PUK<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+            <th>USIM<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+            <th>IP<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+            <th>Operator<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+            <th>Akcje<input type="text" placeholder="Szukaj telefonu" class="form-control form-control-sm" /></th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var sim in Model.SimCardsWithoutModem)
+        {
+            <tr>
+                <td>@sim.PhoneNumber</td>
+                <td>@sim.PIN</td>
+                <td>@sim.PUK</td>
+                <td>@sim.USIM</td>
+                <td>@sim.IP</td>
+                <td>@sim.Op</td>
+                <td>
+                    <a asp-controller="Modem" asp-action="DetailsSimCard" asp-route-simCardID="@sim.SIMId" class="btn btn-info btn-sm">Szczegóły</a>
+                    <a asp-controller="Modem" asp-action="EditDevice" asp-route-simCardID="@sim.SIMId" class="btn btn-warning btn-sm">Edytuj</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+</div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('select').select2({
+            placeholder: "Wybierz numer",
+            allowClear: true,
+            width: '100%'
+        });
+
+        ['#modemTable', '#modemSIMtable', '#simTable'].forEach(function (selector) {
+            let $table = $(selector); // ✅ poprawnie definiujemy tabelę
+            let table = $table.DataTable({
+                paging: false,
+                searching: true,
+                ordering: false,
+                orderCellsTop: true,
+                fixedHeader: true,
+                autoWidth: false,
+                scrollCollapse: true,
+                language: {
+                    search: "Szukaj:",
+                    lengthMenu: "Pokaż _MENU_ rekordów",
+                    info: "Wyświetlanie _START_ do _END_ z _TOTAL_ rekordów",
+                    infoEmpty: "Brak danych do wyświetlenia",
+                    zeroRecords: "Brak pasujących rekordów",
+                    emptyTable: "Brak danych w tabeli",
+                    paginate: {
+                        first: "Pierwsza",
+                        last: "Ostatnia",
+                        next: "Następna",
+                        previous: "Poprzednia"
+                    }
+                }
+            });
+
+            // Filtrowanie po inputach w drugim wierszu nagłówka
+            $table.find('thead tr:eq(0) th').each(function (index) {
+                let input = $('input', this);
+                if (input.length) {
+                    input.on('keyup change', function () {
+                        table.column(index).search(this.value).draw();
+                    });
+                }
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+
+

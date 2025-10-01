@@ -1,0 +1,64 @@
+﻿@model WebApp.Application.Devices.DeviceDto
+
+@{
+    ViewData["Title"] = "Szczegóły";
+}
+
+<h1>Szczegóły</h1>
+
+
+<fieldset>
+    <legend>Dane modemu</legend>
+
+    <dl class="row">
+        <dt class="col-sm-3">Model</dt>
+        <dd class="col-sm-9">@Model.Modem.Model</dd>
+
+        <dt class="col-sm-3">Numer seryjny (SN)</dt>
+        <dd class="col-sm-9">@Model.Modem.SerialNumber</dd>
+
+        <dt class="col-sm-3">RU</dt>
+        <dd class="col-sm-9">@Model.Modem.RU</dd>
+
+        <dt class="col-sm-3">Poprzedni numer drogerii</dt>
+        <dd class="col-sm-9">@Model.Modem.PrevShopID</dd>
+
+        <dt class="col-sm-3">Aktualny numer drogerii</dt>
+        <dd class="col-sm-9">@Model.Modem.ShopID</dd>
+
+        <dt class="col-sm-3">Lokalizacja</dt>
+        <dd class="col-sm-9">@Model.Modem.Place</dd>
+
+        <dt class="col-sm-3">Opis</dt>
+        <dd class="col-sm-9">@Model.Modem.Description</dd>
+    </dl>
+</fieldset>
+
+<fieldset>
+    <legend>Dane karty SIM</legend>
+
+    <dl class="row">
+        <dt class="col-sm-3">Numer telefonu</dt>
+        <dd class="col-sm-9">@Model.SimCard.PhoneNumber</dd>
+
+        <dt class="col-sm-3">USIM</dt>
+        <dd class="col-sm-9">@Model.SimCard.USIM</dd>
+
+        <dt class="col-sm-3">PIN</dt>
+        <dd class="col-sm-9">@Model.SimCard.PIN</dd>
+
+        <dt class="col-sm-3">PUK</dt>
+        <dd class="col-sm-9">@Model.SimCard.PUK</dd>
+
+        <dt class="col-sm-3">Operator</dt>
+        <dd class="col-sm-9">@Model.SimCard.Op</dd>
+
+        <dt class="col-sm-3">IP</dt>
+        <dd class="col-sm-9">@Model.SimCard.IP</dd>
+    </dl>
+</fieldset>
+
+<div>
+    <a asp-controller="Modem" asp-action="EditDevice" asp-route-RU="@Model.Modem.RU" class="btn btn-warning btn-sm">Edytuj</a>
+    <a asp-action="Index" class="btn btn-secondary">Powrót</a>
+</div>

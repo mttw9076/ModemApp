@@ -1,0 +1,60 @@
+﻿@model IEnumerable<WebApp.Application.DSL.DSLDTO>
+
+@{
+    ViewData["Title"] = "Konfiguracje DSL";
+}
+<p>
+    <a asp-action="Create" class="btn btn-success mb-2"> ➕ Dodaj nowy</a>
+</p>
+<h1>Konfiguracje DSL</h1>
+
+
+
+<input type="text" id="searchInput" placeholder="Wpisz numer drogerii" class="form-control mb-3" />
+
+<div id="message" class="text-danger mb-2"></div>
+<div id="resultCard" class="d-flex flex-wrap"></div>
+
+<div id="staticCards" class="d-flex flex-wrap">
+    @foreach (var item in Model)
+    {
+        <div class="card m-2" style="width: 18rem;">
+            <div class="card-body">
+                <p class="card-title">Nr drogerii: @item.ShopId</p>
+                <p class="card-text">Dostawca: @item.ServiceName</p>
+                <p class="card-text">Rodzaj: @item.ServiceType</p>
+                <p class="card-text">IP: @item.IP</p>
+                <a class="btn btn-primary" asp-controller="DSL" asp-action="Details" asp-route-ShopId="@item.ShopId">Więcej</a>
+                <a class="btn btn-secondary" asp-controller="DSL" asp-action="Edit" asp-route-ShopId="@item.ShopId">Edytuj</a>
+                <form asp-action="Delete" method="post" class="d-inline" onsubmit="return confirm('Czy na pewno chcesz usunąć tę konfigurację DSL?');">
+                    <input type="hidden" name="shopId" value="@item.ShopId" />
+                    <button type="submit" class="btn btn-danger">Usuń</button>
+                </form>
+
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("searchInput").addEventListener("input", function () {
+            const query = this.value.trim().toLowerCase();
+            const cards = document.querySelectorAll("#staticCards .card");
+            let found = false;
+
+            cards.forEach(card => {
+                const shopIdText = card.querySelector(".card-title").textContent.toLowerCase();
+                if (shopIdText.includes(query)) {
+                    card.style.display = "block";
+                    found = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            document.getElementById("message").textContent = found || query === "" ? "" : "Nie znaleziono drogerii o podanym numerze.";
+        });
+    </script>
+
+}

@@ -1,0 +1,26 @@
+﻿@model WebApp.Application.Modem.ModemDTO
+
+<h2>Dane modemu</h2>
+<dl class="row">
+    <dt class="col-sm-3">RU</dt>
+    <dd class="col-sm-9">@Model.RU</dd>
+
+    <dt class="col-sm-3">Model</dt>
+    <dd class="col-sm-9">@Model.Model</dd>
+
+    <dt class="col-sm-3">Numer seryjny</dt>
+    <dd class="col-sm-9">@Model.SerialNumber</dd>
+
+    <dt class="col-sm-3">Sklep</dt>
+    <dd class="col-sm-9">@Model.ShopID</dd>
+
+    <dt class="col-sm-3">Opis</dt>
+    <dd class="col-sm-9">@Model.Description</dd>
+</dl>
+
+
+<a asp-controller="Modem" asp-action="EditDevice" asp-route-RU="@Model.RU" class="btn btn-warning btn-sm">Edytuj</a>
+<form asp-controller="Modem" asp-action="DeleteModem" asp-route-ru="@Model.RU" method="post" onsubmit="return confirm('Czy na pewno chcesz usunąć ten modem?');">
+    <button type="submit" class="btn btn-danger">🗑️ Usuń</button>
+</form>
+<a asp-action="Index" class="btn btn-secondary">Powrót</a>

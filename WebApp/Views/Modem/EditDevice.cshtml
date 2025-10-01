@@ -1,0 +1,104 @@
+﻿@using WebApp.Application.Device.Commands.EditDevice
+@model EditDeviceCommand
+
+@{
+    ViewData["Title"] = "Edytuj urządzenie";
+}
+
+<h2>Edytuj urządzenie</h2>
+
+<form asp-action="EditDevice" method="post">
+
+    <fieldset>
+        <legend>Dane modemu</legend>
+       <input type="hidden" asp-for="Modem.ModemId" />
+        <input type="hidden" asp-for="SimCard.ModemId" />
+        <div class="form-group">
+            <label asp-for="Modem.Model"></label>
+            <input asp-for="Modem.Model" class="form-control" />
+            <span asp-validation-for="Modem.Model" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Modem.SerialNumber">Numer Seryjny</label>
+            <input asp-for="Modem.SerialNumber" class="form-control" />
+            <span asp-validation-for="Modem.SerialNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Modem.RU"></label>
+            <input asp-for="Modem.RU" class="form-control" />
+            <span asp-validation-for="Modem.RU" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+
+            <input type="hidden" asp-for="Modem.PrevShopID" />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Modem.ShopID">Aktualna lokalizacja</label>
+            <input asp-for="Modem.ShopID" class="form-control" />
+            <span asp-validation-for="Modem.ShopID" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Modem.Place">Miejsce w drogerii</label>
+            <input asp-for="Modem.Place" class="form-control" />
+            <span asp-validation-for="Modem.Place" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Modem.Description">Opis</label>
+            <textarea asp-for="Modem.Description" class="form-control"></textarea>
+            <span asp-validation-for="Modem.Description" class="text-danger"></span>
+        </div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Dane karty SIM</legend>
+        <input type="hidden" asp-for="SimCard.SIMId" />
+
+        <div class="form-group">
+            <label asp-for="SimCard.PhoneNumber">Numer Telefonu</label>
+            <input asp-for="SimCard.PhoneNumber" class="form-control" />
+            <span asp-validation-for="SimCard.PhoneNumber" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SimCard.USIM"></label>
+            <input asp-for="SimCard.USIM" class="form-control" />
+            <span asp-validation-for="SimCard.USIM" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SimCard.PIN"></label>
+            <input asp-for="SimCard.PIN" class="form-control" />
+            <span asp-validation-for="SimCard.PIN" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SimCard.PUK"></label>
+            <input asp-for="SimCard.PUK" class="form-control" />
+            <span asp-validation-for="SimCard.PUK" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SimCard.Op">Operator</label>
+            <input asp-for="SimCard.Op" class="form-control" />
+            <span asp-validation-for="SimCard.Op" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="SimCard.IP"></label>
+            <input asp-for="SimCard.IP" class="form-control" />
+            <span asp-validation-for="SimCard.IP" class="text-danger"></span>
+        </div>
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Zapisz</button>
+    <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
